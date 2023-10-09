@@ -48,7 +48,14 @@ FilePond.registerPlugin(
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
     connect() {
-        var files = []
+        let files = []
+        let input
+
+        for (const child of this.element.children) {
+            if (child.tagName === 'INPUT' && child.type === 'file') {
+                input = child
+            }
+        }
 
         for (const child of this.element.children) {
             if (child.tagName !== 'DATA') {
@@ -73,13 +80,14 @@ export default class extends Controller {
             }
 
             if (child.dataset.href) {
+                file.options.metadata = file.options.metadata || {}
                 file.options.metadata.poster = child.dataset.href
             }
 
             files.push(file)
         }
 
-        FilePond.create(input[0], {
+        FilePond.create(input, {
             files: files,
             credits: false
         })
