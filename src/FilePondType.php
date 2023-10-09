@@ -29,6 +29,10 @@ class FilePondType extends FileType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        if ($options['multiple'] === true) {
+            throw new \InvalidArgumentException('FilePondType does not support multiple files');
+        }
+
         $builder
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
                 /** @var null|string */
@@ -60,8 +64,7 @@ class FilePondType extends FileType
 
                 $file = FilePondFileEncodeAdapter::adapt($data);
                 $event->setData($file);
-            })
-        ;
+            });
     }
 
     public function getBlockPrefix(): string
@@ -77,7 +80,5 @@ class FilePondType extends FileType
             'remove_on_null' => false,
             'data_class' => FileInterface::class,
         ]);
-
-        $resolver->remove('multiple'); // we do not support multiple files
     }
 }
