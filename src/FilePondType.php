@@ -69,7 +69,7 @@ class FilePondType extends FileType
 
     public function getBlockPrefix(): string
     {
-        return 'filepond';
+        return 'rekalogika_file_filepond';
     }
 
     public function configureOptions(OptionsResolver $resolver): void
