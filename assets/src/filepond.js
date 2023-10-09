@@ -32,13 +32,13 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 
 FilePond.registerPlugin(
     FilePondPluginFileEncode,
+    FilePondPluginImageExifOrientation,
     FilePondPluginFileMetadata,
     FilePondPluginFilePoster,
     FilePondPluginFileValidateSize,
     FilePondPluginFileValidateType,
     FilePondPluginImageCrop,
     FilePondPluginImageEdit,
-    FilePondPluginImageExifOrientation,
     FilePondPluginImagePreview,
     FilePondPluginImageResize,
     FilePondPluginImageTransform,

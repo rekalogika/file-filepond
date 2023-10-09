@@ -1,6 +1,7 @@
 # rekalogika/file-filepond
 
-
+Opinionated file upload form field powered by FilePond on the client side and
+Symfony Form on the server side, using the `rekalogika/file` library.
 
 ## Documentation
 

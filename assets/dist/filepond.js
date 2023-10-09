@@ -50,7 +50,7 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-FilePond.registerPlugin(_filepondPluginFileEncode["default"], _filepondPluginFileMetadata["default"], _filepondPluginFilePoster["default"], _filepondPluginFileValidateSize["default"], _filepondPluginFileValidateType["default"], _filepondPluginImageCrop["default"], _filepondPluginImageEdit["default"], _filepondPluginImageExifOrientation["default"], _filepondPluginImagePreview["default"], _filepondPluginImageResize["default"], _filepondPluginImageTransform["default"], _filepondPluginImageValidateSize["default"]);
+FilePond.registerPlugin(_filepondPluginFileEncode["default"], _filepondPluginImageExifOrientation["default"], _filepondPluginFileMetadata["default"], _filepondPluginFilePoster["default"], _filepondPluginFileValidateSize["default"], _filepondPluginFileValidateType["default"], _filepondPluginImageCrop["default"], _filepondPluginImageEdit["default"], _filepondPluginImagePreview["default"], _filepondPluginImageResize["default"], _filepondPluginImageTransform["default"], _filepondPluginImageValidateSize["default"]);
 
 /* stimulusFetch: 'lazy' */
 var _default = exports["default"] = /*#__PURE__*/function (_Controller) {
@@ -64,12 +64,27 @@ var _default = exports["default"] = /*#__PURE__*/function (_Controller) {
     key: "connect",
     value: function connect() {
       var files = [];
+      var input;
       var _iterator = _createForOfIteratorHelper(this.element.children),
         _step;
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var child = _step.value;
-          if (child.tagName !== 'DATA') {
+          if (child.tagName === 'INPUT' && child.type === 'file') {
+            input = child;
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+      var _iterator2 = _createForOfIteratorHelper(this.element.children),
+        _step2;
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var _child = _step2.value;
+          if (_child.tagName !== 'DATA') {
             continue;
           }
           var file = {
@@ -80,23 +95,24 @@ var _default = exports["default"] = /*#__PURE__*/function (_Controller) {
             options: {
               type: 'local',
               file: {
-                name: child.dataset.name,
-                size: child.dataset.size,
-                type: child.dataset.type
+                name: _child.dataset.name,
+                size: _child.dataset.size,
+                type: _child.dataset.type
               }
             }
           };
-          if (child.dataset.href) {
-            file.options.metadata.poster = child.dataset.href;
+          if (_child.dataset.href) {
+            file.options.metadata = file.options.metadata || {};
+            file.options.metadata.poster = _child.dataset.href;
           }
           files.push(file);
         }
       } catch (err) {
-        _iterator.e(err);
+        _iterator2.e(err);
       } finally {
-        _iterator.f();
+        _iterator2.f();
       }
-      FilePond.create(input[0], {
+      FilePond.create(input, {
         files: files,
         credits: false
       });
