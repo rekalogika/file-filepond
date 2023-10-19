@@ -17,7 +17,6 @@ use Rekalogika\Contracts\File\FileInterface;
 use Rekalogika\Domain\File\Association\Entity\FileCollection;
 use Rekalogika\File\Bridge\Symfony\HttpFoundation\FromHttpFoundationFileAdapter;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -29,7 +28,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Form type for handling multiple files.
  */
-class FilePondCollectionType extends FormType
+class FilePondCollectionType extends FileType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -85,6 +84,8 @@ class FilePondCollectionType extends FormType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        parent::buildView($view, $form, $options);
+
         // we force using allowFileEncode because of this bug:
         // https://github.com/pqina/filepond/pull/941
         $view->vars['attr'] = array_merge(
@@ -103,14 +104,11 @@ class FilePondCollectionType extends FormType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'allow_delete' => false,
             'multiple' => true,
         ]);
-    }
-
-    public function getParent(): ?string
-    {
-        return FileType::class;
     }
 }
