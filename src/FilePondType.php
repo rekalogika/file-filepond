@@ -91,8 +91,6 @@ class FilePondType extends FormType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'allow_delete' => false,
             'data_class' => FileInterface::class,

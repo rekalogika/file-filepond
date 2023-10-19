@@ -85,8 +85,6 @@ class FilePondCollectionType extends FormType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        parent::buildView($view, $form, $options);
-
         // we force using allowFileEncode because of this bug:
         // https://github.com/pqina/filepond/pull/941
         $view->vars['attr'] = array_merge(
@@ -105,8 +103,6 @@ class FilePondCollectionType extends FormType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults([
             'allow_delete' => false,
             'multiple' => true,
