@@ -16,6 +16,7 @@ namespace Rekalogika\File\Bridge\FilePond;
 use Rekalogika\Contracts\File\FileInterface;
 use Rekalogika\File\Bridge\Symfony\HttpFoundation\FromHttpFoundationFileAdapter;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -39,7 +40,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * ],
  * ```
  */
-class FilePondType extends FileType
+class FilePondType extends FormType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -96,5 +97,10 @@ class FilePondType extends FileType
             'allow_delete' => false,
             'data_class' => FileInterface::class,
         ]);
+    }
+
+    public function getParent(): ?string
+    {
+        return FileType::class;
     }
 }

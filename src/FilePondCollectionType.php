@@ -17,6 +17,7 @@ use Rekalogika\Contracts\File\FileInterface;
 use Rekalogika\Domain\File\Association\Entity\FileCollection;
 use Rekalogika\File\Bridge\Symfony\HttpFoundation\FromHttpFoundationFileAdapter;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -28,7 +29,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Form type for handling multiple files.
  */
-class FilePondCollectionType extends FileType
+class FilePondCollectionType extends FormType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -110,5 +111,10 @@ class FilePondCollectionType extends FileType
             'allow_delete' => false,
             'multiple' => true,
         ]);
+    }
+
+    public function getParent(): ?string
+    {
+        return FileType::class;
     }
 }
